@@ -1,0 +1,21 @@
+apiVersion: serving.knative.dev/v1
+kind: Service
+metadata:
+  name: simple-python-exec
+  namespace: ailab
+spec:
+  template:
+    metadata:
+      annotations:
+        autoscaling.knative.dev/minScale: "1"
+        autoscaling.knative.dev/maxScale: "10"
+        autoscaling.knative.dev/metric: "concurrency"
+        autoscaling.knative.dev/target: "3"
+    spec:
+      containerConcurrency: 10
+      timeoutSeconds: 300
+      containers:
+      - name: user-container
+        image: ghcr.io/windreamer/simple_python_exec:e0b32624297bb8e8133adbf0c491016ef688534b@sha256:4393348969c2aca4174d14663567d4009e1935bcdd392ae388f26a8e2ea6db23
+        ports:
+        - containerPort: 8000
