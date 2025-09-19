@@ -2,7 +2,7 @@
 import asyncio, subprocess, tempfile, sys, os
 from fastmcp import FastMCP
 
-mcp = FastMCP("PyExecutor")
+mcp = FastMCP("PyExecutor", stateless_http=True)
 
 @mcp.tool()
 async def exec_python(code: str) -> dict:
